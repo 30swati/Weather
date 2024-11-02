@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather APP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@latest/dist/ionicons/ionicons.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Roboto", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        body {
+            background-image: linear-gradient(rgb(59, 241, 172), rgb(91, 142, 235), rgb(207, 57, 212));
+            width: 100%;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        #forecast::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        #forecast::-webkit-scrollbar-track {
+            background: rgb(0, 0, 0, 0.1);
+            border-radius: 99px;
+        }
+
+        #forecast::-webkit-scrollbar-thumb {
+            background: #00000026;
+            border-radius: 99px;
+        } 
+        
+    </style>
+</head>
+</head>
+
+<body>
+    <main id="container" class="w-[300px] md:w-[320px] h-520px bg-[#00000026]  bg-opacity-20 rounded-3xl">
+        <header id="input-container">
+            <div class="block w-auto h-4 m-10 mt-5">
+                <label class="relative block">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+                        <p class="h-5 w-5 fill-slate-300 text-black" id="search-btn" viewBox="0 0 20 20"><ion-icon
+                                name="search-outline"></ion-icon></p>
+                    </span>
+                    <input
+                        class="placeholder:italic w-full text-black placeholder:text-slate-400 block bg-slate-300 hover:bg-slate-100  border border-slate-300 rounded-3xl py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+                        id="search-city" placeholder="Search City..." type="text" name="search" />
+        </header>
+        <section id="weather-info" class="m-6 md:m-8 mt-4 hidden">
+            <div class="flex justify-between">
+                <div class="flex items-center justify-center">
+                    <div class="font-extrabold text-center pr-1 text-xl"><ion-icon name="location-outline"></ion-icon></div>
+                    <div id="location-name" class="text-xl">Delhi</div>
+                </div>
+                <p id="current-date" class="text-xl">Fri, 18 Oct</p>
+            </div>
+            <div class="mt-1 flex items-center gap-12 justify-between mr-8">
+                <img src="assets/sunny-and-rainy-day-weather-png.webp" alt="img" class="weatherImage w-36 h-32">
+                <div>
+                    <p class="text-xl font-bold text-center" id="temp">29°C </p>
+                    <p class="text-xl text-center" id="description">Raining</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div class="flex justify-between">
+                    <div class="flex items-center w-28 h-10 gap-2 justify-center hover:bg-[#00000026] rounded-md p-3">
+                        <p class="text-3xl"><ion-icon name="water-outline"></ion-icon></p>
+                        <div>
+                            <p class="uppercase text-sm">Humidity</p>
+                            <p class=" text-sm" id="humidity">89%</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center w-28 h-10 gap-2 justify-center hover:bg-[#00000026] rounded-md p-3">
+                        <div class="text-white"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                fill="currentColor" class="bi bi-wind" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.5 2A2.5 2.5 0 0 0 10 4.5a.5.5 0 0 1-1 0A3.5 3.5 0 1 1 12.5 8H.5a.5.5 0 0 1 0-1h12a2.5 2.5 0 0 0 0-5m-7 1a1 1 0 0 0-1 1 .5.5 0 0 1-1 0 2 2 0 1 1 2 2h-5a.5.5 0 0 1 0-1h5a1 1 0 0 0 0-2M0 9.5A.5.5 0 0 1 .5 9h10.042a3 3 0 1 1-3 3 .5.5 0 0 1 1 0 2 2 0 1 0 2-2H.5a.5.5 0 0 1-.5-.5" />
+                            </svg></div>
+                        <div>
+                            <p class="uppercase text-sm">Wind </p>
+                            <p class="text-sm" id="wind">04km/h</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-between">
+                    <div class="flex items-center w-28 h-10 gap-2 justify-center hover:bg-[#00000026] rounded-md">
+                        <p class="text-3xl"><ion-icon name="reorder-two-outline"></ion-icon></p>
+                        <div>
+                            <p class="uppercase text-sm">Pressure</p>
+                            <p class="text-sm " id="pressure">1000hPa</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center w-28 h-10 gap-2 justify-center hover:bg-[#00000026] rounded-md">
+                        <div><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                                class="bi bi-water" viewBox="0 0 16 16">
+                                <path
+                                    d="M.036 3.314a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0L.314 3.964a.5.5 0 0 1-.278-.65m0 3a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0L.314 6.964a.5.5 0 0 1-.278-.65m0 3a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0L.314 9.964a.5.5 0 0 1-.278-.65m0 3a.5.5 0 0 1 .65-.278l1.757.703a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.014-.406a2.5 2.5 0 0 1 1.857 0l1.015.406a1.5 1.5 0 0 0 1.114 0l1.757-.703a.5.5 0 1 1 .372.928l-1.758.703a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.014-.406a1.5 1.5 0 0 0-1.114 0l-1.015.406a2.5 2.5 0 0 1-1.857 0l-1.757-.703a.5.5 0 0 1-.278-.65" />
+                            </svg></div>
+                        <div>
+                            <p class="uppercase text-sm">Visibility</p>
+                            <p class="text-sm" id="visibility">44km/h</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="forecast" class="flex gap-5 overflow-x-scroll scroll-smooth mt-8 pb-2">
+                <div
+                    class="forecast-container flex flex-col items-center min-w-20 bg-[#ffffff1a] rounded-xl hover:bg-[#00000026] p-1">
+                    <p class="text-sm">18 Oct</p>
+                    <img src="assets/mist.webp" alt="img" class="w-16 h-16">
+                    <p class="text-sm">clear</p>
+                    <p>22°C</p>
+                </div>
+                <div
+                    class="forecast-container flex flex-col items-center min-w-20 bg-[#ffffff1a] rounded-xl hover:bg-[#00000026] p-1">
+                    <p class="text-sm">18 Oct</p>
+                    <img src="assets/overcastCloud.webp" alt="img" class="w-16 h-16">
+                    <p>22°C</p>
+                </div>
+                <div
+                    class="forecast-container flex flex-col items-center min-w-20 bg-[#ffffff1a] rounded-xl hover:bg-[#00000026] p-1">
+                    <p class="text-sm">18 Oct</p>
+                    <img src="assets/fewcloud.webp" alt="img" class="w-16 h-16">
+                    <p>22°C</p>
+                </div>
+                <div
+                    class="forecast-container flex flex-col items-center min-w-20 bg-[#ffffff1a] rounded-xl hover:bg-[#00000026] p-1">
+                    <p class="text-sm">18 Oct</p>
+                    <img src="assets/thunderstrom.webp" alt="img" class="w-16 h-16">
+                    <p>22°C</p>
+                </div>
+                <div
+                    class="forecast-container flex flex-col items-center min-w-20 bg-[#ffffff1a] rounded-xl hover:bg-[#00000026] p-1">
+                    <p class="text-sm">18 Oct</p>
+                    <img src="assets/showerRain.webp" alt="img" class="w-16 h-16">
+                    <p>22°C</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="search-here" class="m-2 mt-10 h-[420px] ">
+             <img src="assets/weather-search.png" alt="weather" class="h-80 w-auto">
+             <div>
+                <h1 class="text-center text-2xl ml-6 mr-6">Search City</h1>
+                <p class="text-center text-md ml-6 mr-6">Find out the weather condition of the city</p>
+             </div>
+        </section>
+
+        <section id="Not-found" class="m-2 h-[430px] hidden">
+            <img src="assets/error.png" alt="error-404" class="h-64 w-auto mt-14">
+            <div>
+               <h1 class="text-center text-2xl ml-6 mr-6">Not Found</h1>
+               <p class="text-center text-md ml-6 mr-6">Find out the weather condition of the city</p>
+            </div>
+       </section>
+    </main>
+    <script src="jscript.js"></script>
+</body>
+
+</html>
